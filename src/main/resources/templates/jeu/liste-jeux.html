@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Liste des jeux</title>
+<link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+
+<section class="section-group">
+	<h1>Liste des jeux</h1>
+	<table>
+		<tr>
+			<th scope="col">Titre</th>
+	      	<th scope="col">Référence</th>
+	      	<th scope="col">Description</th>
+	      	<th scope="col">Genres</th>
+	      	<th scope="col">Tarif journée</th>
+	      	<th scope="col">Age min</th>
+	      	<th scope="col">Durée</th>
+		</tr>
+		<tr th:each="jeu: ${jeux}">
+			<td th:text="${jeu.titre}" />
+	    	<td th:text="${jeu.reference}" />
+	    	<td th:text="${jeu.description}" />
+	    	<td th:text="${jeu.getGenresToString()}" />
+	    	<td th:text='${jeu.getTarifJourneeToString() + "€"}' />
+	    	<td th:text="${jeu.ageMin}" />
+	    	<td th:text="${jeu.duree + ' minutes'}" />
+	    	<td>
+	    		<a th:href="@{/jeux/{noJeu}(noJeu=${jeu.noJeu})}"><button class="primary-btn">Consulter</button></a>
+	    		<a th:href="@{/jeux/supprimer/{noJeu}(noJeu=${jeu.noJeu})}"><button class="remove-btn">Supprimer</button></a>
+	    		<a th:href="@{/jeux/modifier/{noJeu}(noJeu=${jeu.noJeu})}"><button>Modifier</button></a>
+	    	</td>
+		</tr>
+	</table>
+	<a href="/jeux/ajouter"><button class="add-btn">Ajouter un jeu</button></a>
+</section>
+
+
+</body>
+</html>

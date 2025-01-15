@@ -1,0 +1,124 @@
+@charset "ISO-8859-1";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+	font-family: "Roboto", serif;
+}
+
+body {
+	background-color: #F3F0E7;
+	min-height: 100vmin;
+	margin: 0;
+	display: flex;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(140 140 140);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  border-radius: 5px;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+caption {
+  caption-side: bottom;
+  padding: 10px;
+  font-weight: bold;
+}
+
+thead,
+tfoot {
+  background-color: rgb(228 240 245);
+}
+
+th,
+td {
+  border: 1px solid rgb(160 160 160);
+  padding: 8px 10px;
+}
+
+td:last-of-type {
+  text-align: center;
+}
+
+tbody > tr:nth-of-type(even) {
+  background-color: rgb(237 238 242);
+}
+
+tfoot th {
+  text-align: right;
+}
+
+tfoot td {
+  font-weight: bold;
+}
+
+table button {
+	margin-top: 0;
+	margin-block: 2px;
+}
+
+section.section-group {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: fit-content;
+	background-color: white;
+	box-shadow: 1px 1px 10px #dadada;
+	margin: auto;
+	border-radius: 10px;
+	padding: 20px;
+}
+
+section.section-group h1 {
+	margin: 0 0 20px 0;
+	padding: 0;
+}
+
+button {
+	margin-top: 10px;
+	font-size: 1.25em;
+	background-color: grey;
+	color: white;
+	border: none;
+	padding: 0.4em 0.75em;
+	border-radius: 5px;
+	transition: 0.2s;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: rgb(92, 92, 92);
+}
+
+button.add-btn {
+	background-color: #10B981;
+}
+
+button.add-btn:hover {
+	background-color: #0e9a6c;
+}
+
+button.remove-btn {
+	background-color: #f40000;
+}
+
+button.remove-btn:hover {
+	background-color: #cc0000;
+}
+
+button.primary-btn {
+	background-color: #157bf9;
+}
+
+button.primary-btn:hover {
+	background-color: #0560cd;
+}

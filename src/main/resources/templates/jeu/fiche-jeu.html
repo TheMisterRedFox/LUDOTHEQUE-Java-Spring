@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>[[${jeu.titre}]]</title>
+<link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+
+	<section class="section-group">
+		<h1 th:text="${jeu.titre}"></h1>
+		<p>Référence : [[${jeu.reference}]]</p>
+		<p>Description : [[${jeu.description}]]</p>
+		<p>Genres : [[${jeu.getGenresToString()}]]</p>
+		<p>Tarif journée : [[${jeu.getTarifJourneeToString()}]]€</p>
+		<p>Age minimum pour jouer : [[${jeu.ageMin}]] ans</p>
+		<p>Durée moyenne : [[${jeu.duree}]] minutes</p>
+		<a th:href="@{/jeux/supprimer/{noJeu}(noJeu=${jeu.noJeu})}"><button class="remove-btn">Supprimer</button></a>
+		<a th:href="@{/jeux/modifier/{noJeu}(noJeu=${jeu.noJeu})}"><button>Modifier</button></a>
+	</section>
+	
+</body>
+</html>

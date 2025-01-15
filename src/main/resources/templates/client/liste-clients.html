@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Liste des clients</title>
+<link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+
+<section class="section-group">
+	<h1>Liste des clients</h1>
+	<table>
+		<tr>
+			<th scope="col">Nom</th>
+	      	<th scope="col">Prénom</th>
+	      	<th scope="col">Email</th>
+	      	<th scope="col">Teléphone</th>
+	      	<th scope="col">Adresse</th>
+	      	<th scope="col">Action</th>
+		</tr>
+		<tr th:each="client: ${clients}">
+			<td th:text="${client.nom}" />
+	    	<td th:text="${client.prenom}" />
+	    	<td th:text="${client.email}" />
+	    	<td th:text="${client.noTel}" />
+	    	<td>[[${client.rue}]], [[${client.codePostal}]] [[${client.ville}]]</td>
+	    	<td>
+	    		<a th:href="@{/clients/{noClient}(noClient=${client.noClient})}"><button class="primary-btn">Consulter</button></a>
+	    		<a th:href="@{/clients/supprimer/{noClient}(noClient=${client.noClient})}"><button class="remove-btn">Supprimer</button></a>
+	    		<a th:href="@{/clients/modifier/{noClient}(noClient=${client.noClient})}"><button>Modifier</button></a>
+	    	</td>
+		</tr>
+	</table>
+	<a href="/clients/ajouter"><button class="add-btn">Ajouter un client</button></a>
+</section>
+
+
+</body>
+</html>

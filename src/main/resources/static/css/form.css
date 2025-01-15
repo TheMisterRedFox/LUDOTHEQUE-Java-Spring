@@ -1,0 +1,59 @@
+@charset "ISO-8859-1";
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 40vw;
+	background-color: white;
+	box-shadow: 1px 1px 10px #dadada;
+	padding: 20px;
+	margin: auto;
+	border-radius: 10px;
+}
+
+form input {
+	border: 1px solid #C0C4C9;
+	background-color: #F9FAFB;
+	padding: 12px;
+	border-radius: 5px;
+	border-bottom: 2px solid #C0C4C9;
+	font-size: 0.9em;
+	outline: none;
+	transition: 0.2s;
+}
+
+form input:focus, input.input-error:focus {
+	border-color: #3B4CE2;
+}
+
+form input.input-error {
+	border-color: #f40000;
+}
+
+form .compulsory-cross {
+	color: #ff2222;
+}
+
+form .form-group {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	margin-block: 10px;
+}
+
+form .form-group label {
+	margin-bottom: 5px;
+}
+
+form h1, form p {
+	padding: 0;
+	margin: 0;
+}
+
+form ul {
+	list-style-type: none;
+	padding: 3px 0 0 0;
+	margin: 0;
+}
