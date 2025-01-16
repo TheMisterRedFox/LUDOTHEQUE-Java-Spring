@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>
+    <th:block th:if="${exemplaire.noExemplaire != null }">
+    Modifier l'examplaire
+    </th:block>
+    <th:block th:unless="${exemplaire.noExemplaire != null }">
+    Ajouter un exemplaire
+    </th:block>
+  </title>
+  <link th:href="@{/css/form.css}" rel="stylesheet">
+  <link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+
+<th:block th:object="${exemplaire}">
+
+  <form action="/exemplaire/ajouter" method="post" >
+    <th:block th:if="${exemplaire.noExemplaire != null }">
+      <h1>Modifier l'exemplaire</h1>
+    </th:block>
+    <th:block th:unless="${exemplaire.noExemplaire != null }">
+      <h1>Ajouter un exemplaire</h1>
+    </th:block>
+    <div style="color: red;" th:if="${#fields.hasErrors('*')}" >
+      <p>Des erreurs de saisie sont apparues.</p>
+    </div>
+
+    <input type="hidden" th:field="*{noExemplaire}" id="noExemplaire">
+    <div class="form-group">
+      <label for="codeBarre">Code barre <span class="compulsory-cross">*</span> </label>
+      <input th:attr="class=${#fields.hasErrors('codeBarre') ? 'input-error' : ''}" type="text" th:field="*{codeBarre}" id="codeBarre" placeholder="Le code barre de l'exemplaire">
+      <span style="color: red;" th:if="${#fields.hasErrors('codeBarre')}">
+        <ul>
+            <li th:each="erreur: ${#fields.errors('codeBarre')}" th:text="${erreur}"></li>
+        </ul>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="louable">Louable ? <span class="compulsory-cross">*</span> </label>
+      <input th:attr="class=${#fields.hasErrors('louable') ? 'input-error' : ''}"  type="checkbox" th:field="*{louable}" id="louable" placeholder="Votre prénom">
+      <span style="color: red;" th:if="${#fields.hasErrors('louable')}">
+          <ul>
+              <li th:each="erreur: ${#fields.errors('louable')}" th:text="${erreur}"></li>
+          </ul>
+      </span>
+    </div>
+    <!--<div class="form-group">
+      <label for="jeu">Jeu <span class="compulsory-cross">*</span></label>
+      <select id="jeu" th:field="*{louable}">
+        <option th:value="${jeu}"></option>
+      </select>
+    </div>-->
+    <button type="submit" class="add-btn">Ajouter</button>
+  </form>
+</th:block>
+</body>
+</html>
