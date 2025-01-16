@@ -24,7 +24,14 @@ form input {
 	transition: 0.2s;
 }
 
-form input:focus, input.input-error:focus {
+form input:read-only {
+	background-color: #d3d3d3;
+	border-color: #bababa;
+	cursor: not-allowed;
+	color: #636363;
+}
+
+form input:not(:read-only):focus, input.input-error:focus {
 	border-color: #3B4CE2;
 }
 

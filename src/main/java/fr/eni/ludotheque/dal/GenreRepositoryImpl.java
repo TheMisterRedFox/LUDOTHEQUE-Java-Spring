@@ -4,21 +4,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import fr.eni.ludotheque.bo.Genre;
-import fr.eni.ludotheque.bo.Jeu;
 
 @Repository
 public class GenreRepositoryImpl implements GenreRepository {
 	
 	private JdbcTemplate jdbcTemplate;
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-	public GenreRepositoryImpl(JdbcTemplate jdbcTemplate) {
+	public GenreRepositoryImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 	}
 	
 	@Override
@@ -38,6 +42,21 @@ public class GenreRepositoryImpl implements GenreRepository {
 		Optional<Genre> optGenre = Optional.ofNullable(genre);
 		
 		return optGenre;
+	}
+
+	@Override
+	public List<Genre> findMultipleById(List<Integer> idList) {
+		// Préparer la requête SQL avec un paramètre IN dynamique
+		String sql = "SELECT no_genre, libelle FROM genres WHERE no_GENRE IN (:ids)";
+
+		// Utiliser MapSqlParameterSource pour passer la liste d'ids
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("ids", idList);
+
+		// Exécuter la requête avec le NamedParameterJdbcTemplate
+		List<Genre> genres = namedParameterJdbcTemplate.query(sql, parameters, new GenreRowMapper());
+
+		return genres;
 	}
 	
 	@Override

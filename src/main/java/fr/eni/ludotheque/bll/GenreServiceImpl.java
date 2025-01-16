@@ -37,4 +37,8 @@ public class GenreServiceImpl implements GenreService {
 		genreRepository.delete(id);
 	}
 
+	@Override
+	public List<Genre> findMultipleById(List<Integer> idList) {
+		return genreRepository.findMultipleById(idList);
+	}
 }

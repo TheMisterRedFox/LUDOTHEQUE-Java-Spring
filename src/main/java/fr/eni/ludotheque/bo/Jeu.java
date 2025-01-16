@@ -8,8 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class Jeu {
-	
-	@NotNull
+
 	private Integer noJeu;
 	
 	@NotBlank
@@ -29,7 +28,9 @@ public class Jeu {
 	private int ageMin;
 	
 	private int duree;
-	
+
+	private List<Integer> genresIdList;
+
 	private List<Genre> genres;
 	
 	public Jeu() {
@@ -157,6 +158,14 @@ public class Jeu {
 		});	
 		
 		return String.join(", ", genresList);
+	}
+
+	public List<Integer> getGenresIdList() {
+		return genresIdList;
+	}
+
+	public void setGenresIdList(List<Integer> genresIdList) {
+		this.genresIdList = genresIdList;
 	}
 
 	@Override

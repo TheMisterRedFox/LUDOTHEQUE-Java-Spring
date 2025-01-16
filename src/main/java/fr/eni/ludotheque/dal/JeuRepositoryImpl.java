@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
@@ -19,10 +21,12 @@ import fr.eni.ludotheque.bo.Jeu;
 public class JeuRepositoryImpl implements JeuRepository {
 
 	private JdbcTemplate jdbcTemplate;
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	private GenreRepository genreRepository;
 
-	public JeuRepositoryImpl(JdbcTemplate jdbcTemplate, GenreRepository genreRepository) {
+	public JeuRepositoryImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, GenreRepository genreRepository) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 		this.genreRepository = genreRepository;
 	}
 
@@ -58,59 +62,70 @@ public class JeuRepositoryImpl implements JeuRepository {
 	@Override
 	public void save(Jeu jeu) {
 		String sql;
-		if (jeu.getNoJeu() == null) {
-			// Si le jeu n'existe pas encore, on l'insère
-			sql = "INSERT INTO jeux (titre, reference, description, tarif_journee, agemin, duree) VALUES (?, ?, ?, ?, ?, ?)";
+		MapSqlParameterSource params = new MapSqlParameterSource();
 
-			// Utilisation d'un KeyHolder pour récupérer l'ID généré
+		if (jeu.getNoJeu() == null) {
+			sql = "INSERT INTO jeux (titre, reference, description, tarif_journee, agemin, duree) " +
+					"VALUES (:titre, :reference, :description, :tarif_journee, :agemin, :duree)";
+
+			params.addValue("titre", jeu.getTitre());
+			params.addValue("reference", jeu.getReference());
+			params.addValue("description", jeu.getDescription());
+			params.addValue("tarif_journee", jeu.getTarifJournee());
+			params.addValue("agemin", jeu.getAgeMin());
+			params.addValue("duree", jeu.getDuree());
+
 			GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
-			// Exécution de l'insertion avec le KeyHolder pour récupérer l'ID
-			jdbcTemplate.update(connection -> {
-				PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				ps.setString(1, jeu.getTitre());
-				ps.setString(2, jeu.getReference());
-				ps.setString(3, jeu.getDescription());
-				ps.setFloat(4, jeu.getTarifJournee());
-				ps.setInt(5, jeu.getAgeMin());
-				ps.setInt(6, jeu.getDuree());
-				return ps;
-			}, keyHolder);
+			namedParameterJdbcTemplate.update(sql, params, keyHolder, new String[]{"no_jeu"});
 
-			Integer jeuId = keyHolder.getKey().intValue();
+			Integer jeuId = keyHolder.getKeyAs(Integer.class);
 			jeu.setNoJeu(jeuId);
 
-			List<Genre> genres = jeu.getGenres();
-			for (Genre genre : genres) {
-				String insertSql = "INSERT INTO jeux_genres (no_jeu, no_genre) VALUES (?, ?)";
-				jdbcTemplate.update(insertSql, jeuId, genre.getNoGenre());
+			for (Genre genre : jeu.getGenres()) {
+				String insertGenreSql = "INSERT INTO jeux_genres (no_jeu, no_genre) VALUES (:no_jeu, :no_genre)";
+				MapSqlParameterSource genreParams = new MapSqlParameterSource();
+				genreParams.addValue("no_jeu", jeuId);
+				genreParams.addValue("no_genre", genre.getNoGenre());
+				namedParameterJdbcTemplate.update(insertGenreSql, genreParams);
 			}
 		} else {
-			sql = "UPDATE jeux SET titre = ?, reference = ?, description = ?, tarif_journee = ?, agemin = ?, duree = ? WHERE no_jeu = ?";
-			jdbcTemplate.update(sql, jeu.getTitre(), jeu.getReference(), jeu.getDescription(), jeu.getTarifJournee(),
-					jeu.getAgeMin(), jeu.getDuree(), jeu.getNoJeu());
+			sql = "UPDATE jeux SET titre = :titre, reference = :reference, description = :description, " +
+					"tarif_journee = :tarif_journee, agemin = :agemin, duree = :duree WHERE no_jeu = :no_jeu";
 
+			params.addValue("titre", jeu.getTitre());
+			params.addValue("reference", jeu.getReference());
+			params.addValue("description", jeu.getDescription());
+			params.addValue("tarif_journee", jeu.getTarifJournee());
+			params.addValue("agemin", jeu.getAgeMin());
+			params.addValue("duree", jeu.getDuree());
+			params.addValue("no_jeu", jeu.getNoJeu());
+
+			namedParameterJdbcTemplate.update(sql, params);
+
+			// Suppression des genres qui ne sont plus associés au jeu
 			List<Genre> genresLiesAJeux = genreRepository.findGenreByJeuId(jeu.getNoJeu());
-
-			// Supprimer les genres qui ne sont plus associés à ce jeu
 			for (Genre genreLie : genresLiesAJeux) {
 				if (!jeu.getGenres().contains(genreLie)) {
-					// Supprimer la relation entre le jeu et ce genre
-					String deleteSql = "DELETE FROM jeux_genres WHERE no_jeu = ? AND no_genre = ?";
-					jdbcTemplate.update(deleteSql, jeu.getNoJeu(), genreLie.getNoGenre());
+					String deleteSql = "DELETE FROM jeux_genres WHERE no_jeu = :no_jeu AND no_genre = :no_genre";
+					MapSqlParameterSource deleteParams = new MapSqlParameterSource();
+					deleteParams.addValue("no_jeu", jeu.getNoJeu());
+					deleteParams.addValue("no_genre", genreLie.getNoGenre());
+					namedParameterJdbcTemplate.update(deleteSql, deleteParams);
 				}
 			}
 
-			// Ajout des nouveaux genres qui ne sont pas encore associés à ce jeu
+			// Ajout des nouveaux genres associés
 			for (Genre genre : jeu.getGenres()) {
 				if (!genresLiesAJeux.contains(genre)) {
-					String insertSql = "INSERT INTO jeux_genres (no_jeu, no_genre) VALUES (?, ?)";
-					jdbcTemplate.update(insertSql, jeu.getNoJeu(), genre.getNoGenre());
+					String insertSql = "INSERT INTO jeux_genres (no_jeu, no_genre) VALUES (:no_jeu, :no_genre)";
+					MapSqlParameterSource insertParams = new MapSqlParameterSource();
+					insertParams.addValue("no_jeu", jeu.getNoJeu());
+					insertParams.addValue("no_genre", genre.getNoGenre());
+					namedParameterJdbcTemplate.update(insertSql, insertParams);
 				}
 			}
-
 		}
-
 	}
 
 	@Override

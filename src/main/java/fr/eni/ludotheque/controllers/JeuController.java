@@ -2,17 +2,17 @@ package fr.eni.ludotheque.controllers;
 
 import java.util.Optional;
 
+import fr.eni.ludotheque.bo.Client;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import fr.eni.ludotheque.bll.GenreService;
 import fr.eni.ludotheque.bll.JeuService;
-import fr.eni.ludotheque.bo.Client;
 import fr.eni.ludotheque.bo.Jeu;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping("/jeux")
 @Controller
@@ -41,7 +41,36 @@ public class JeuController {
 	@GetMapping(path= {"/ajouter"})
 	public String afficherFormulaireAjoutJeu(Model modele) {
 		modele.addAttribute("genres", genreService.findAll());
+		modele.addAttribute("jeu", new Jeu());
 		return "jeu/formulaire-jeux";
+	}
+
+	@PostMapping(path= {"/ajouter"})
+	public String ajouterJeu(@Valid @ModelAttribute("jeu") Jeu jeu, BindingResult resultat, Model modele, RedirectAttributes redirectAttr){
+		if(resultat.hasErrors()) {
+
+			resultat.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
+			redirectAttr.addFlashAttribute( "org.springframework.validation.BindingResult.jeu", resultat);
+			redirectAttr.addFlashAttribute("jeu", jeu);
+			return "redirect:/jeux/ajouter";
+		}
+
+		jeu.setGenres(genreService.findMultipleById(jeu.getGenresIdList()));
+		jeuService.save(jeu);
+		return "redirect:/jeux";
+	}
+
+	@GetMapping("/modifier/{noJeu}")
+	public String getModifierClient(@PathVariable(name="noJeu") int noJeu, Model modele) {
+		Optional<Jeu> jeuOpt = jeuService.findById(noJeu);
+
+		if (jeuOpt.isPresent()) {
+			modele.addAttribute("genres", genreService.findAll());
+			modele.addAttribute("jeu", jeuOpt.get());
+			return "jeu/formulaire-jeux";
+		}
+
+		return "redirect:/jeux";
 	}
 	
 	@GetMapping(path= {"/{noJeu}"})

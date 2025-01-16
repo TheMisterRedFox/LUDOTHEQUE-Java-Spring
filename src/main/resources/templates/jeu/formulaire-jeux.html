@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="UTF-8">
 <title>
 	<th:block th:if="${jeu.noJeu != null }">
-	    <h2>Modifier le jeu</h2>
+	    Modifier le jeu
 	</th:block>
 	<th:block th:unless="${jeu.noJeu != null }">
-    	<h2>Ajouter un jeu</h2>
+    	Ajouter un jeu
     </th:block>
 </title>
 <link th:href="@{/css/form.css}" rel="stylesheet">
@@ -35,7 +35,7 @@
 			</div>
 			<div class="form-group">
 				<label for="reference">Référence <span class="compulsory-cross">*</span> </label>
-				<input th:attr="class=${#fields.hasErrors('reference') ? 'input-error' : ''}"  type="text" th:field="*{reference}" id="reference" placeholder="Réference du jeu">
+				<input th:attr="class=${#fields.hasErrors('reference') ? 'input-error' : ''}"  type="text" th:field="*{reference}" id="reference" placeholder="Réference du jeu" th:readonly="${noJeu != null}">
 				<span style="color: red;" th:if="${#fields.hasErrors('reference')}">
 					<ul>
 						<li th:each="erreur: ${#fields.errors('reference')}" th:text="${erreur}"></li>
@@ -43,21 +43,12 @@
 				</span>	
 			</div>
 			<div class="form-group">
-				<label for="description">Description</label> <input
-					th:attr="class=${#fields.hasErrors('reference') ? 'input-error' : ''}"
-					type="text" th:field="*{reference}" id="reference"
-					placeholder="Réference du jeu"> <span style="color: red;" th:if="${#fields.hasErrors('reference')}">
+				<label for="description">Descripion</label> <input
+					th:attr="class=${#fields.hasErrors('description') ? 'input-error' : ''}"
+					type="text" th:field="*{description}" id="description"
+					placeholder="Description du jeu"> <span style="color: red;" th:if="${#fields.hasErrors('description')}">
 					<ul>
-						<li th:each="erreur: ${#fields.errors('reference')}" th:text="${erreur}"></li>
-					</ul>
-				</span>	
-			</div>
-			<div class="form-group">
-				<label for="tarifJournee">Tarif journée</label>
-				<input th:attr="class=${#fields.hasErrors('tarifJournee') ? 'input-error' : ''}" type="number" th:field="*{tarifJournee}" id="tarifJournee" placeholder="Tarif journalier du jeu">
-				<span style="color: red;" th:if="${#fields.hasErrors('tarifJournee')}">
-					<ul>
-						<li th:each="erreur: ${#fields.errors('tarifJournee')}" th:text="${erreur}"></li>
+						<li th:each="erreur: ${#fields.errors('description')}" th:text="${erreur}"></li>
 					</ul>
 				</span>	
 			</div>
@@ -88,8 +79,22 @@
 					</ul>
 				</span>	
 			</div>
+			<div class="form-group">
+				<label for="genresIdList">Genres</label>
+				<select th:field="*{genresIdList}" id="genresIdList" multiple="multiple" size="6">
+					<option th:each="genre : ${genres}"
+							th:value="${genre.noGenre}"
+							th:text="${genre.libelle}"></option>
+				</select>
+				<span style="color: red;" th:if="${#fields.hasErrors('genresIdList')}">
+					<ul>
+						<li th:each="erreur : ${#fields.errors('genresIdList')}" th:text="${erreur}"></li>
+					</ul>
+				</span>
+			</div>
 			<button type="submit" class="add-btn">Ajouter</button>		
 		</form>
+
 	</th:block>
 </body>
 </html>
