@@ -1,8 +1,11 @@
 package fr.eni.ludotheque.controllers;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import fr.eni.ludotheque.bo.Client;
+import fr.eni.ludotheque.bo.Genre;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,6 +68,9 @@ public class JeuController {
 		Optional<Jeu> jeuOpt = jeuService.findById(noJeu);
 
 		if (jeuOpt.isPresent()) {
+			Jeu jeu = jeuOpt.get();
+			List<Integer> genresIdList = jeu.getGenres().stream().map(Genre::getNoGenre).collect(Collectors.toList());
+			jeu.setGenresIdList(genresIdList);
 			modele.addAttribute("genres", genreService.findAll());
 			modele.addAttribute("jeu", jeuOpt.get());
 			return "jeu/formulaire-jeux";

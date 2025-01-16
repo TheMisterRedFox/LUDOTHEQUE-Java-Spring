@@ -51,6 +51,10 @@ public class GenreRepositoryImpl implements GenreRepository {
 
 		// Utiliser MapSqlParameterSource pour passer la liste d'ids
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
+
+		if(idList == null || idList.size() == 0) {
+			idList.add(-1);
+		}
 		parameters.addValue("ids", idList);
 
 		// Exécuter la requête avec le NamedParameterJdbcTemplate

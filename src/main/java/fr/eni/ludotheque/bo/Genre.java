@@ -42,20 +42,16 @@ public class Genre {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(noGenre);
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+		Genre genre = (Genre) obj;
+		return Objects.equals(noGenre, genre.noGenre); // Compare les IDs des genres
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Genre other = (Genre) obj;
-		return Objects.equals(noGenre, other.noGenre);
+	public int hashCode() {
+		return Objects.hash(noGenre); // Utilise le noGenre pour le hash code
 	}
 	
 	

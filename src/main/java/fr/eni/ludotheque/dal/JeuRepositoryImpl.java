@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import fr.eni.ludotheque.bo.Genre;
 import fr.eni.ludotheque.bo.Jeu;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class JeuRepositoryImpl implements JeuRepository {
@@ -60,6 +61,7 @@ public class JeuRepositoryImpl implements JeuRepository {
 	}
 
 	@Override
+	@Transactional
 	public void save(Jeu jeu) {
 		String sql;
 		MapSqlParameterSource params = new MapSqlParameterSource();
