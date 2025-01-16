@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <title>
 	<th:block th:if="${client.noClient != null }">
-	    <h2>Modifier le client</h2>
+	    Modifier le client
 	</th:block>
 	<th:block th:unless="${client.noClient != null }">
-    	<h2>Ajouter un client</h2>
+    	Ajouter un client
     </th:block>
 </title>
 <link th:href="@{/css/form.css}" rel="stylesheet">
@@ -18,7 +18,12 @@
 	<th:block th:object="${client}">
 	
 		<form action="/clients/ajouter" method="post" >
-			<h1>Ajout d'un client</h1>
+			<th:block th:if="${client.noClient != null }">
+				<h1>Modifier le client</h1>
+			</th:block>
+			<th:block th:unless="${client.noClient != null }">
+				<h1>Ajouter un client</h1>
+			</th:block>
 			<div style="color: red;" th:if="${#fields.hasErrors('*')}" >
 				<p>Des erreurs de saisie sont apparues.</p>
 			</div>
