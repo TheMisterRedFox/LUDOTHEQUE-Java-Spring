@@ -16,7 +16,9 @@ public class Exemplaire {
 	private boolean louable;
 	
 	private Jeu jeu;
-	
+
+	private Integer jeuId;
+
 	public Exemplaire() {
 	}
 
@@ -78,6 +80,14 @@ public class Exemplaire {
 
 	public void setLouable(boolean louable) {
 		this.louable = louable;
+	}
+
+	public Integer getJeuId() {
+		return jeuId;
+	}
+
+	public void setJeuId(Integer jeuId) {
+		this.jeuId = jeuId;
 	}
 
 	@Override

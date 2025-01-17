@@ -17,7 +17,7 @@
 
 <th:block th:object="${exemplaire}">
 
-  <form action="/exemplaire/ajouter" method="post" >
+  <form action="/exemplaires/ajouter" method="post" >
     <th:block th:if="${exemplaire.noExemplaire != null }">
       <h1>Modifier l'exemplaire</h1>
     </th:block>
@@ -29,6 +29,13 @@
     </div>
 
     <input type="hidden" th:field="*{noExemplaire}" id="noExemplaire">
+
+    <div class="form-group">
+      <label for="jeu">Jeu <span class="compulsory-cross">*</span></label>
+      <select id="jeu" th:field="*{jeuId}">
+        <option th:each="j : ${jeux}" th:value="${j.getNoJeu()}" th:text="${j.getTitre()}"></option>
+      </select>
+    </div>
     <div class="form-group">
       <label for="codeBarre">Code barre <span class="compulsory-cross">*</span> </label>
       <input th:attr="class=${#fields.hasErrors('codeBarre') ? 'input-error' : ''}" type="text" th:field="*{codeBarre}" id="codeBarre" placeholder="Le code barre de l'exemplaire">
@@ -38,7 +45,7 @@
         </ul>
       </span>
     </div>
-    <div class="form-group">
+    <div class="form-group row">
       <label for="louable">Louable ? <span class="compulsory-cross">*</span> </label>
       <input th:attr="class=${#fields.hasErrors('louable') ? 'input-error' : ''}"  type="checkbox" th:field="*{louable}" id="louable" placeholder="Votre prénom">
       <span style="color: red;" th:if="${#fields.hasErrors('louable')}">
@@ -47,12 +54,6 @@
           </ul>
       </span>
     </div>
-    <!--<div class="form-group">
-      <label for="jeu">Jeu <span class="compulsory-cross">*</span></label>
-      <select id="jeu" th:field="*{louable}">
-        <option th:value="${jeu}"></option>
-      </select>
-    </div>-->
     <button type="submit" class="add-btn">Ajouter</button>
   </form>
 </th:block>

@@ -24,7 +24,7 @@ form input {
 	transition: 0.2s;
 }
 
-form input:read-only {
+form input[type="text"]:read-only {
 	background-color: #d3d3d3;
 	border-color: #bababa;
 	cursor: not-allowed;
@@ -50,7 +50,12 @@ form .form-group {
 	margin-block: 10px;
 }
 
-form .form-group label {
+form .form-group.row {
+	flex-direction: row;
+	align-items: center;
+}
+
+form .form-group:not(.row) label {
 	margin-bottom: 5px;
 }
 
