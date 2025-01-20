@@ -31,11 +31,13 @@
 					<tr>
 						<th>Code barre</th>
 						<th>Louable ?</th>
+						<th>Action</th>
 					</tr>
 					<tr th:each="ex : ${exemplaires}">
 						<td th:text="${ex.getCodeBarre()}"></td>
 						<td th:if="${ex.isLouable() == true}">Oui</td>
 						<td th:if="${ex.isLouable() == false}">Non</td>
+						<td><a th:href="@{/exemplaires/modifier/{noExemplaire}(noExemplaire=${ex.getNoExemplaire()})}"><button>Modifier</button></a></td>
 					</tr>
 				</table>
 			</th:block>
