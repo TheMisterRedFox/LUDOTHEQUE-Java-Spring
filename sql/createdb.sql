@@ -48,3 +48,5 @@ CREATE TABLE EXEMPLAIRES_JEUX (
 	FOREIGN KEY (no_jeu) REFERENCES JEUX(no_jeu)
 );
 
+-- Merci d'exécuter les scripts createProcedure.sql et insertTestSet.sql après ce script.
+

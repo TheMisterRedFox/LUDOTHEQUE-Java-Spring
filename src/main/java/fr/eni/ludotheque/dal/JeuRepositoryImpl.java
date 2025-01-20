@@ -131,9 +131,10 @@ public class JeuRepositoryImpl implements JeuRepository {
 	}
 
 	@Override
+	@Transactional
 	public void delete(int id) {
-		String sql = "DELETE FROM jeux_genres WHERE no_jeu = ?; " + "DELETE FROM jeux WHERE no_jeu = ?";
-		jdbcTemplate.update(sql, id, id);
+		String sql = "call supprimer_jeu(?)";
+		jdbcTemplate.update(sql, id);
 	}
 
 	class JeuRowMapper implements RowMapper<Jeu> {
