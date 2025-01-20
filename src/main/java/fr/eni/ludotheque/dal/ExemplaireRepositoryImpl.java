@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import fr.eni.ludotheque.bo.Genre;
 import fr.eni.ludotheque.bo.Jeu;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -46,6 +45,17 @@ public class ExemplaireRepositoryImpl implements ExemplaireRepository {
 		Optional<Exemplaire> optExemplaire = Optional.ofNullable(exemplaire);
 
 		return optExemplaire;
+	}
+
+	@Override
+	public List<Exemplaire> findByJeu(Jeu jeu) {
+		String sql = "SELECT no_exemplaire_jeu, no_jeu, codebarre, louable FROM EXEMPLAIRES_JEUX WHERE no_jeu = ?";
+
+		List<Exemplaire> exemplaires = jdbcTemplate.query(sql, new ExemplaireRowMapper(), jeu.getNoJeu());
+
+		exemplaires.forEach(exemplaire -> exemplaire.setJeu(jeu));
+
+		return exemplaires;
 	}
 
 	@Override

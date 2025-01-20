@@ -3,8 +3,8 @@ package fr.eni.ludotheque.bll;
 import java.util.List;
 import java.util.Optional;
 
+import fr.eni.ludotheque.bo.Jeu;
 import fr.eni.ludotheque.dal.ExemplaireRepository;
-import org.springframework.stereotype.Repository;
 
 import fr.eni.ludotheque.bo.Exemplaire;
 import org.springframework.stereotype.Service;
@@ -38,4 +38,8 @@ public class ExemplaireServiceImpl implements ExemplaireService {
 		exemplaireRepository.delete(id);
 	}
 
+	@Override
+	public List<Exemplaire> findByJeu(Jeu jeu) {
+		return exemplaireRepository.findByJeu(jeu);
+	}
 }

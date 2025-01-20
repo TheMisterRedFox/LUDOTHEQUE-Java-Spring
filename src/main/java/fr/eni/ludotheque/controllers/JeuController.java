@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import fr.eni.ludotheque.bll.ExemplaireService;
 import fr.eni.ludotheque.bo.Client;
+import fr.eni.ludotheque.bo.Exemplaire;
 import fr.eni.ludotheque.bo.Genre;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -23,15 +25,22 @@ public class JeuController {
 
 	private JeuService jeuService;
 	private GenreService genreService;
+	private ExemplaireService exemplaireService;
 	
-	public JeuController(JeuService jeuService, GenreService genreService) {
+	public JeuController(JeuService jeuService, GenreService genreService, ExemplaireService exemplaireService) {
 		this.jeuService = jeuService;
 		this.genreService = genreService;
+		this.exemplaireService = exemplaireService;
 	}
 	
 	@ModelAttribute("jeu")
 	public Jeu createJeu() {
 		return new Jeu();
+	}
+
+	@ModelAttribute("exemplaire")
+	public Exemplaire createExemplaire() {
+		return new Exemplaire();
 	}
 	
 	@RequestMapping(path={"/", ""})
@@ -86,12 +95,30 @@ public class JeuController {
 		
 		if(jeu.isPresent()) {
 			modele.addAttribute("jeu", jeu.get());
+			modele.addAttribute("exemplaires", exemplaireService.findByJeu(jeu.get()));
 		} else {
 			modele.addAttribute("jeu", null);
 		}
 		
 		
 		return "jeu/fiche-jeu";
+	}
+
+	@PostMapping(path= {"/{noJeu}/ajoutExemplaire"})
+	public String ajouterExemplaire(@Valid @ModelAttribute("exemplaire") Exemplaire exemplaire, @PathVariable(name="noJeu") int noJeu, BindingResult resultat, Model modele, RedirectAttributes redirectAttr){
+		Optional<Jeu> jeuAssocie = jeuService.findById(noJeu);
+
+		if(resultat.hasErrors() || jeuAssocie.isEmpty()) {
+			resultat.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
+			redirectAttr.addFlashAttribute( "org.springframework.validation.BindingResult.exemplaires", resultat);
+			redirectAttr.addFlashAttribute("exemplaire", exemplaire);
+			return "redirect:/jeux/" + noJeu;
+		}
+
+		exemplaire.setJeu(jeuAssocie.get());
+		exemplaireService.save(exemplaire);
+
+		return "redirect:/jeux/" + noJeu;
 	}
 	
 	@GetMapping(path= {"/supprimer/{noJeu}"})

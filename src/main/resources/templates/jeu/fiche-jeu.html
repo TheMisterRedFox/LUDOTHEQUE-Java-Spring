@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>[[${jeu.titre}]]</title>
 <link th:href="@{/css/common.css}" rel="stylesheet">
+	<link th:href="@{/css/form.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -18,6 +19,59 @@
 		<a th:href="@{/jeux/supprimer/{noJeu}(noJeu=${jeu.noJeu})}"><button class="remove-btn">Supprimer</button></a>
 		<a th:href="@{/jeux/modifier/{noJeu}(noJeu=${jeu.noJeu})}"><button>Modifier</button></a>
 	</section>
-	
+
+	<div class="table-and-form">
+		<section class="section-group">
+			<h1>Exemplaires liés au jeu</h1>
+			<th:block th:if="${exemplaires.isEmpty()}">
+				<p>Aucun exemplaire lié au jeu.</p>
+			</th:block>
+			<th:block th:unless="${exemplaires.isEmpty()}">
+				<table>
+					<tr>
+						<th>Code barre</th>
+						<th>Louable ?</th>
+					</tr>
+					<tr th:each="ex : ${exemplaires}">
+						<td th:text="${ex.getCodeBarre()}"></td>
+						<td th:if="${ex.isLouable() == true}">Oui</td>
+						<td th:if="${ex.isLouable() == false}">Non</td>
+					</tr>
+				</table>
+			</th:block>
+		</section>
+
+		<th:block th:object="${exemplaire}">
+
+			<form class="form-auto" th:action="${'/jeux/' + jeu.getNoJeu() + '/ajoutExemplaire'}" method="post" >
+				<h1>Ajouter un exemplaire</h1>
+				<div style="color: red;" th:if="${#fields.hasErrors('*')}" >
+					<p>Des erreurs de saisie sont apparues.</p>
+				</div>
+
+				<input type="hidden" th:field="*{noExemplaire}" id="noExemplaire">
+
+				<div class="form-group">
+					<label for="codeBarre">Code barre <span class="compulsory-cross">*</span> </label>
+					<input th:attr="class=${#fields.hasErrors('codeBarre') ? 'input-error' : ''}" type="text" th:field="*{codeBarre}" id="codeBarre" placeholder="Le code barre de l'exemplaire">
+					<span style="color: red;" th:if="${#fields.hasErrors('codeBarre')}">
+						<ul>
+							<li th:each="erreur: ${#fields.errors('codeBarre')}" th:text="${erreur}"></li>
+						</ul>
+					</span>
+				</div>
+				<div class="form-group row">
+					<label for="louable">Louable ? <span class="compulsory-cross">*</span> </label>
+					<input th:attr="class=${#fields.hasErrors('louable') ? 'input-error' : ''}"  type="checkbox" th:field="*{louable}" id="louable" placeholder="Votre prénom">
+					<span style="color: red;" th:if="${#fields.hasErrors('louable')}">
+						  <ul>
+							  <li th:each="erreur: ${#fields.errors('louable')}" th:text="${erreur}"></li>
+						  </ul>
+				    </span>
+				</div>
+				<button type="submit" class="add-btn">Ajouter</button>
+			</form>
+		</th:block>
+	</div>
 </body>
 </html>

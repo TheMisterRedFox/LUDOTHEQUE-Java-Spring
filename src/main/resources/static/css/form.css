@@ -13,6 +13,10 @@ form {
 	border-radius: 10px;
 }
 
+form.form-auto {
+	width: auto;
+}
+
 form input {
 	border: 1px solid #C0C4C9;
 	background-color: #F9FAFB;
