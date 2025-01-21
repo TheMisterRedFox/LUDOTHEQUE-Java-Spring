@@ -10,7 +10,12 @@
 
 <div sec:authorize="isAuthenticated()">
 	<form th:action="@{/logout}" method="post">
-		<input type="submit" value="Sign Out"/>
+		<button type="submit" class="remove-btn">Se déconnecter</button>
+	</form>
+</div>
+<div sec:authorize="!isAuthenticated()">
+	<form th:action="@{/logout}" method="post">
+		<button type="submit" class="add-btn">Se connecter</button>
 	</form>
 </div>
 <section class="section-group">

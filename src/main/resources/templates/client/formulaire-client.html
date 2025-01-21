@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 <meta charset="UTF-8">
 <title>
@@ -14,7 +15,11 @@
 <link th:href="@{/css/common.css}" rel="stylesheet">
 </head>
 <body>
-	
+	<div sec:authorize="isAuthenticated()">
+		<form th:action="@{/logout}" method="post">
+			<button type="submit" class="remove-btn">Se déconnecter</button>
+		</form>
+	</div>
 	<th:block th:object="${client}">
 	
 		<form action="/clients/ajouter" method="post" >

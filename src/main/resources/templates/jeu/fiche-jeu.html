@@ -8,7 +8,16 @@
 	<link th:href="@{/css/form.css}" rel="stylesheet">
 </head>
 <body>
-
+	<div sec:authorize="isAuthenticated()">
+		<form th:action="@{/logout}" method="post">
+			<button type="submit" class="remove-btn">Se déconnecter</button>
+		</form>
+	</div>
+	<div sec:authorize="!isAuthenticated()">
+		<form th:action="@{/logout}" method="post">
+			<button type="submit" class="add-btn">Se connecter</button>
+		</form>
+	</div>
 	<section class="section-group">
 		<h1 th:text="${jeu.titre}"></h1>
 		<p>Référence : [[${jeu.reference}]]</p>
