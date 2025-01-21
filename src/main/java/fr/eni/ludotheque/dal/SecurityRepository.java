@@ -6,5 +6,5 @@ import fr.eni.ludotheque.bo.Utilisateur;
 
 public interface SecurityRepository {
 	
-	Optional<Utilisateur> findUserByLoginArgs (String username, String hashPassword);
+	Optional<Utilisateur> findUserByLoginArgs (String username);
 }

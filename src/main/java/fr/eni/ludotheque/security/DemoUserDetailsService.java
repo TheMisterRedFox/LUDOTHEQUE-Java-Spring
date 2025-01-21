@@ -30,13 +30,10 @@ public class DemoUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		UserBuilder userBuilder = User.builder();
-		Optional<Utilisateur> optUtilisateur = securityService.findUserByLoginArgs(username, null);
+		Optional<Utilisateur> optUtilisateur = securityService.findUserByLoginArgs(username);
 
 		if(optUtilisateur.isPresent()) {
 			Utilisateur utilisateur = optUtilisateur.get();
-			System.out.println(utilisateur.getMotDePasse());
-			utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
-			System.out.println(utilisateur.getMotDePasse());
 			System.out.println(Arrays.toString(utilisateur.getRoles().toArray(new String[0])));
 			userBuilder.username(utilisateur.getNomUtilisateur()).password(utilisateur.getMotDePasse()).roles(utilisateur.getRoles().toArray(new String[0]));
 		} else {

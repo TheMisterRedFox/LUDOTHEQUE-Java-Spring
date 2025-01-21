@@ -17,8 +17,8 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 	
 	@Override
-	public Optional<Utilisateur> findUserByLoginArgs(String username, String hashPassword) {
-		return this.securityRepository.findUserByLoginArgs(username, hashPassword);
+	public Optional<Utilisateur> findUserByLoginArgs(String username) {
+		return this.securityRepository.findUserByLoginArgs(username);
 	}
 
 }

@@ -18,8 +18,7 @@ values (1, 3), (2, 3), (3, 3), (4, 2), (5, 5), (6, 4);
 
 INSERT INTO ROLES VALUES ('CLIENT')
 INSERT INTO ROLES VALUES ('ADMIN')
-INSERT INTO UTILISATEURS (pseudo_utilisateur, mot_de_passe) VALUES ('admin', 'password');
-INSERT INTO UTILISATEURS (pseudo_utilisateur, mot_de_passe) VALUES ('client', 'Pa$$w0rd');
+INSERT INTO UTILISATEURS (pseudo_utilisateur, mot_de_passe) VALUES ('admin', '{bcrypt}$2a$10$Ccwq/gX3VJPYbuXArteqiuDBQwCYr0AIv9tJf6KgpgFGkRw8B9JOm');
+INSERT INTO UTILISATEURS (pseudo_utilisateur, mot_de_passe) VALUES ('client', '{bcrypt}$2a$10$7JgxiZGEvY7SZvzaF2xhLOU189QMHql0rGS7Q7KM/60qQw9zvv.Pa');
 INSERT INTO UTILISATEURS_ROLES VALUES (1, 'ADMIN');
-INSERT INTO UTILISATEURS_ROLES VALUES (1, 'CLIENT');
 INSERT INTO UTILISATEURS_ROLES VALUES (2, 'CLIENT');

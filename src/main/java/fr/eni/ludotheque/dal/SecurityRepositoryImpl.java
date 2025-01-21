@@ -22,7 +22,7 @@ public class SecurityRepositoryImpl implements SecurityRepository {
 	}
 
 	@Override
-	public Optional<Utilisateur> findUserByLoginArgs(String username, String hashPassword) {
+	public Optional<Utilisateur> findUserByLoginArgs(String username) {
 		String sql = "SELECT no_utilisateur, pseudo_utilisateur, mot_de_passe FROM UTILISATEURS WHERE pseudo_utilisateur = ?";
 
 		Utilisateur utilisateur = jdbcTemplate.queryForObject(sql, new UtilisateurRowMapper(), username);
