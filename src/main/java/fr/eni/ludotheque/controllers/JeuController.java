@@ -19,7 +19,7 @@ import fr.eni.ludotheque.bll.JeuService;
 import fr.eni.ludotheque.bo.Jeu;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequestMapping("/jeux")
+@RequestMapping({"/jeux", "/", ""})
 @Controller
 public class JeuController {
 

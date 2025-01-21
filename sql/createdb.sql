@@ -5,6 +5,9 @@ drop table if exists jeux_genres;
 drop table if exists genres;
 drop table if exists exemplaires_jeux;
 drop table if exists jeux;
+drop table if exists utilisateurs_roles;
+drop table if exists utilisateurs;
+drop table if exists roles;
 
 CREATE TABLE clients (
     no_client SERIAL PRIMARY KEY,
@@ -46,6 +49,24 @@ CREATE TABLE EXEMPLAIRES_JEUX (
     codebarre VARCHAR(13) UNIQUE NOT NULL,
 	louable BOOLEAN NOT NULL DEFAULT TRUE,
 	FOREIGN KEY (no_jeu) REFERENCES JEUX(no_jeu)
+);
+
+CREATE TABLE utilisateurs (
+                              no_utilisateur SERIAL PRIMARY KEY,
+                              pseudo_utilisateur VARCHAR(255) NOT NULL UNIQUE,
+                              mot_de_passe VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE roles (
+                       nom_role VARCHAR(255) PRIMARY KEY
+);
+
+CREATE TABLE utilisateurs_roles (
+                                    no_utilisateur INTEGER NOT NULL,
+                                    nom_role VARCHAR(255) NOT NULL,
+                                    PRIMARY KEY (no_utilisateur, nom_role),
+                                    FOREIGN KEY (no_utilisateur) REFERENCES UTILISATEURS(no_utilisateur)
+                                        FOREIGN KEY (nom_role) REFERENCES ROLES(nom_role)
 );
 
 -- Merci d'exécuter les scripts createProcedure.sql et insertTestSet.sql après ce script.

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 <meta charset="UTF-8">
 <title>Liste des jeux</title>
@@ -7,6 +8,11 @@
 </head>
 <body>
 
+<div sec:authorize="isAuthenticated()">
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out"/>
+	</form>
+</div>
 <section class="section-group">
 	<h1>Liste des jeux</h1>
 	<table>
@@ -29,14 +35,13 @@
 	    	<td th:text="${jeu.duree + ' minutes'}" />
 	    	<td>
 	    		<a th:href="@{/jeux/{noJeu}(noJeu=${jeu.noJeu})}"><button class="primary-btn">Consulter</button></a>
-	    		<a th:href="@{/jeux/supprimer/{noJeu}(noJeu=${jeu.noJeu})}"><button class="remove-btn">Supprimer</button></a>
-	    		<a th:href="@{/jeux/modifier/{noJeu}(noJeu=${jeu.noJeu})}"><button>Modifier</button></a>
+	    		<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/jeux/supprimer/{noJeu}(noJeu=${jeu.noJeu})}"><button class="remove-btn">Supprimer</button></a>
+	    		<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/jeux/modifier/{noJeu}(noJeu=${jeu.noJeu})}"><button>Modifier</button></a>
 	    	</td>
 		</tr>
 	</table>
-	<a href="/jeux/ajouter"><button class="add-btn">Ajouter un jeu</button></a>
+	<a href="/jeux/ajouter"><button class="add-btn" sec:authorize="hasRole('ROLE_ADMIN')">Ajouter un jeu</button></a>
 </section>
-
 
 </body>
 </html>

@@ -15,3 +15,11 @@ VALUES
 ('Catan', 'CATA001', 'Jeu de stratégie et de développement', 3.50, 10, 90);
 insert into jeux_genres (no_jeu, no_genre)
 values (1, 3), (2, 3), (3, 3), (4, 2), (5, 5), (6, 4);
+
+INSERT INTO ROLES VALUES ('CLIENT')
+INSERT INTO ROLES VALUES ('ADMIN')
+INSERT INTO UTILISATEURS (pseudo_utilisateur, mot_de_passe) VALUES ('admin', 'password');
+INSERT INTO UTILISATEURS (pseudo_utilisateur, mot_de_passe) VALUES ('client', 'Pa$$w0rd');
+INSERT INTO UTILISATEURS_ROLES VALUES (1, 'ADMIN');
+INSERT INTO UTILISATEURS_ROLES VALUES (1, 'CLIENT');
+INSERT INTO UTILISATEURS_ROLES VALUES (2, 'CLIENT');
