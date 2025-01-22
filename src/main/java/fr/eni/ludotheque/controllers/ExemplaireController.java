@@ -1,11 +1,8 @@
 package fr.eni.ludotheque.controllers;
 
-import fr.eni.ludotheque.bll.ClientService;
 import fr.eni.ludotheque.bll.ExemplaireService;
 import fr.eni.ludotheque.bll.JeuService;
-import fr.eni.ludotheque.bo.Client;
 import fr.eni.ludotheque.bo.Exemplaire;
-import fr.eni.ludotheque.bo.Genre;
 import fr.eni.ludotheque.bo.Jeu;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -13,11 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequestMapping("/exemplaires")
 @Controller
@@ -39,11 +34,13 @@ public class ExemplaireController {
     @GetMapping(path= {"/ajouter"})
     public String afficherFormulaireAjoutExemplaire(Model modele){
 
+        modele.addAttribute("body", "exemplaire/formulaire-exemplaire");
+        modele.addAttribute("title", "Ajouter un exemplaire");
         modele.addAttribute("jeux", jeuService.findAll());
-        return "exemplaire/formulaire-exemplaire";
+        return "index";
     }
 
-    @PostMapping(path= {"/ajouter"})
+    @PostMapping(path= {"/enregistrer"})
     public String ajouterExemplaire(@Valid @ModelAttribute("exemplaire") Exemplaire exemplaire, BindingResult resultat, Model modele, RedirectAttributes redirectAttr){
         Optional<Jeu> jeuAssocie = jeuService.findById(exemplaire.getJeuId());
 
@@ -79,7 +76,9 @@ public class ExemplaireController {
                 modele.addAttribute("jeux", jeux);
             }
 
-            return "exemplaire/formulaire-exemplaire";
+            modele.addAttribute("body", "exemplaire/formulaire-exemplaire");
+            modele.addAttribute("title", "Modifier un exemplaire");
+            return "index";
         }
 
         return "redirect:/jeux";

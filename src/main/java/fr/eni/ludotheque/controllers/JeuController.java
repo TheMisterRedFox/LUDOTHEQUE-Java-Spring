@@ -3,9 +3,7 @@ package fr.eni.ludotheque.controllers;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import fr.eni.ludotheque.bll.ExemplaireService;
-import fr.eni.ludotheque.bo.Client;
 import fr.eni.ludotheque.bo.Exemplaire;
 import fr.eni.ludotheque.bo.Genre;
 import jakarta.validation.Valid;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import fr.eni.ludotheque.bll.GenreService;
 import fr.eni.ludotheque.bll.JeuService;
 import fr.eni.ludotheque.bo.Jeu;
@@ -47,17 +44,21 @@ public class JeuController {
 	public String afficherListeJeux(Model modele){
 		
 		modele.addAttribute("jeux", jeuService.findAll());
-		return "jeu/liste-jeux";
+		modele.addAttribute("body", "jeu/liste-jeux");
+		modele.addAttribute("title", "Liste des jeux");
+		return "index";
 	}
 	
 	@GetMapping(path= {"/ajouter"})
 	public String afficherFormulaireAjoutJeu(Model modele) {
 		modele.addAttribute("genres", genreService.findAll());
 		modele.addAttribute("jeu", new Jeu());
-		return "jeu/formulaire-jeux";
+		modele.addAttribute("body", "jeu/formulaire-jeux");
+		modele.addAttribute("title", "Ajouter un jeu");
+		return "index";
 	}
 
-	@PostMapping(path= {"/ajouter"})
+	@PostMapping(path= {"/enregistrer"})
 	public String ajouterJeu(@Valid @ModelAttribute("jeu") Jeu jeu, BindingResult resultat, Model modele, RedirectAttributes redirectAttr){
 		if(resultat.hasErrors()) {
 
@@ -82,7 +83,9 @@ public class JeuController {
 			jeu.setGenresIdList(genresIdList);
 			modele.addAttribute("genres", genreService.findAll());
 			modele.addAttribute("jeu", jeuOpt.get());
-			return "jeu/formulaire-jeux";
+			modele.addAttribute("body", "jeu/formulaire-jeux");
+			modele.addAttribute("title", "Modifier un jeu");
+			return "index";
 		}
 
 		return "redirect:/jeux";
@@ -96,12 +99,13 @@ public class JeuController {
 		if(jeu.isPresent()) {
 			modele.addAttribute("jeu", jeu.get());
 			modele.addAttribute("exemplaires", exemplaireService.findByJeu(jeu.get()));
+			modele.addAttribute("title", jeu.get().getTitre());
 		} else {
 			modele.addAttribute("jeu", null);
 		}
-		
-		
-		return "jeu/fiche-jeu";
+
+		modele.addAttribute("body", "jeu/fiche-jeu");
+		return "index";
 	}
 
 	@PostMapping(path= {"/{noJeu}/ajoutExemplaire"})

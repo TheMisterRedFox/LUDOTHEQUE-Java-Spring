@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="https://www.thymeleaf.org"
+                xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
+  <title>
+    <th:block th:if="${title.empty}">
+      La crypte du jeu
+    </th:block>
+    <th:block th:if="${!title.empty}" th:text="${title}">
+    </th:block>
+  </title>
+  <link th:href="@{/css/form.css}" rel="stylesheet">
+  <link th:href="@{/css/common.css}" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" th:href="@{/logo/favicon-32x32.png}">
+  <link rel="icon" type="image/png" sizes="16x16" th:href="@{/logo/favicon-16x16.png}">
+  <link rel="icon" th:href="@{/logo/favicon.ico}" type="image/x-icon"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div sec:authorize="isAuthenticated()">
+    <form th:action="@{/logout}" method="post">
+      <button type="submit" class="remove-btn">Se déconnecter</button>
+    </form>
+  </div>
+  <div sec:authorize="!isAuthenticated()">
+    <form th:action="@{/logout}" method="post">
+      <button type="submit" class="add-btn">Se connecter</button>
+    </form>
+  </div>
+</nav>
+
+<th:block th:insert="~{${body}}"></th:block>
+
+</body>
+
+</html>

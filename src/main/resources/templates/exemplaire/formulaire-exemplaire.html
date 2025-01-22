@@ -1,23 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>
-    <th:block th:if="${exemplaire.noExemplaire != null }">
-    Modifier l'examplaire
-    </th:block>
-    <th:block th:unless="${exemplaire.noExemplaire != null }">
-    Ajouter un exemplaire
-    </th:block>
-  </title>
-  <link th:href="@{/css/form.css}" rel="stylesheet">
-  <link th:href="@{/css/common.css}" rel="stylesheet">
-</head>
-<body>
-
 <th:block th:object="${exemplaire}">
-
-  <form action="/exemplaires/ajouter" method="post" >
+  <form action="/exemplaires/enregistrer" method="post" >
     <th:block th:if="${exemplaire.noExemplaire != null }">
       <h1>Modifier l'exemplaire</h1>
     </th:block>
@@ -54,8 +36,9 @@
           </ul>
       </span>
     </div>
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}"/>
     <button type="submit" class="add-btn">Ajouter</button>
   </form>
 </th:block>
-</body>
-</html>

@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
-	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<head>
-<meta charset="UTF-8">
-<title>[[${client.nom}]] [[${client.prenom}]]</title>
-<link th:href="@{/css/common.css}" rel="stylesheet">
-</head>
-<body>
-	<div sec:authorize="isAuthenticated()">
-		<form th:action="@{/logout}" method="post">
-			<button type="submit" class="remove-btn">Se déconnecter</button>
-		</form>
-	</div>
-	<section class="section-group"> <!--   th:object="${client}>-->
-		<h1>Fiche utilisateur de [[${client.nom}]] [[${client.prenom}]]</h1>
-		<p>Email : [[${client.email}]]</p>
-		<p>Numéro de téléphone : [[${client.noTel}]]</p>
-		<p>Adresse : [[${client.rue}]], [[${client.codePostal}]] [[${client.ville}]]</p>
-		<a th:href="@{/clients/supprimer/{noClient}(noClient=${client.noClient})}"><button class="remove-btn">Supprimer</button></a>
-		<a th:href="@{/clients/modifier/{noClient}(noClient=${client.noClient})}"><button>Modifier</button></a>
-	</section>
-	
-</body>
-</html>
+<section class="section-group"> <!--   th:object="${client}>-->
+	<h1>Fiche utilisateur de [[${client.nom}]] [[${client.prenom}]]</h1>
+	<p>Email : [[${client.email}]]</p>
+	<p>Numéro de téléphone : [[${client.noTel}]]</p>
+	<p>Adresse : [[${client.rue}]], [[${client.codePostal}]] [[${client.ville}]]</p>
+	<a th:href="@{/clients/supprimer/{noClient}(noClient=${client.noClient})}"><button class="remove-btn">Supprimer</button></a>
+	<a th:href="@{/clients/modifier/{noClient}(noClient=${client.noClient})}"><button>Modifier</button></a>
+</section>
