@@ -1,7 +1,6 @@
 package fr.eni.ludotheque.bo;
 
 import java.util.Objects;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
