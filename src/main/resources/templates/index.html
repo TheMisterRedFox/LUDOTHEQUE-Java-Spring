@@ -30,7 +30,7 @@
   <div class="links-section">
     <ul>
       <li><a th:href="@{/jeux}">Jeux</a></li>
-      <li><a sec:authorize="isAuthenticated()" th:href="@{/clients}">Clients</a></li>
+      <li sec:authorize="isAuthenticated()"><a th:href="@{/clients}">Clients</a></li>
     </ul>
   </div>
 
