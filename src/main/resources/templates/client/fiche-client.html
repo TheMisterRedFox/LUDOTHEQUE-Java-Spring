@@ -3,6 +3,6 @@
 	<p>Email : [[${client.email}]]</p>
 	<p>Numéro de téléphone : [[${client.noTel}]]</p>
 	<p>Adresse : [[${client.rue}]], [[${client.codePostal}]] [[${client.ville}]]</p>
-	<a th:href="@{/clients/supprimer/{noClient}(noClient=${client.noClient})}"><button class="remove-btn">Supprimer</button></a>
-	<a th:href="@{/clients/modifier/{noClient}(noClient=${client.noClient})}"><button>Modifier</button></a>
+	<a sec:authorize="hasAnyRole('ADMIN')" th:href="@{/clients/supprimer/{noClient}(noClient=${client.noClient})}"><button class="remove-btn">Supprimer</button></a>
+	<a sec:authorize="hasAnyRole('ADMIN')" th:href="@{/clients/modifier/{noClient}(noClient=${client.noClient})}"><button>Modifier</button></a>
 </section>

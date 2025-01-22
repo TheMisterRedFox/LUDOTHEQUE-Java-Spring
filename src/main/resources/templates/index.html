@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="_csrf" th:content="${_csrf.token}"/>
-  <!-- default header name is X-CSRF-TOKEN -->
   <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <title>
     <th:block th:if="${title.empty}">
@@ -30,7 +29,7 @@
   <div class="links-section">
     <ul>
       <li><a th:href="@{/jeux}">Jeux</a></li>
-      <li sec:authorize="isAuthenticated()"><a th:href="@{/clients}">Clients</a></li>
+      <li sec:authorize="hasAnyRole('ADMIN')"><a th:href="@{/clients}">Clients</a></li>
     </ul>
   </div>
 

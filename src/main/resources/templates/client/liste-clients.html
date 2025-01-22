@@ -17,8 +17,8 @@
 			<td>[[${client.rue}]], [[${client.codePostal}]] [[${client.ville}]]</td>
 			<td>
 				<a th:href="@{/clients/{noClient}(noClient=${client.noClient})}"><button class="primary-btn">Consulter</button></a>
-				<a th:href="@{/clients/supprimer/{noClient}(noClient=${client.noClient})}"><button class="remove-btn">Supprimer</button></a>
-				<a th:href="@{/clients/modifier/{noClient}(noClient=${client.noClient})}"><button>Modifier</button></a>
+				<a sec:authorize="hasAnyRole('ADMIN')" th:href="@{/clients/supprimer/{noClient}(noClient=${client.noClient})}"><button class="remove-btn">Supprimer</button></a>
+				<a sec:authorize="hasAnyRole('ADMIN')" th:href="@{/clients/modifier/{noClient}(noClient=${client.noClient})}"><button>Modifier</button></a>
 			</td>
 		</tr>
 	</table>

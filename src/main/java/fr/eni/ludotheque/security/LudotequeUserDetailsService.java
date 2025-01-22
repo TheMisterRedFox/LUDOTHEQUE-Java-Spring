@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import java.util.Arrays;
 import java.util.Optional;
 
 @Component
@@ -31,7 +30,6 @@ public class LudotequeUserDetailsService implements UserDetailsService {
 
 		if(optUtilisateur.isPresent()) {
 			Utilisateur utilisateur = optUtilisateur.get();
-			System.out.println(Arrays.toString(utilisateur.getRoles().toArray(new String[0])));
 			userBuilder.username(utilisateur.getNomUtilisateur()).password(utilisateur.getMotDePasse()).roles(utilisateur.getRoles().toArray(new String[0]));
 		} else {
 			throw new UsernameNotFoundException(username);
