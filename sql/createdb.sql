@@ -8,6 +8,8 @@ drop table if exists jeux;
 drop table if exists utilisateurs_roles;
 drop table if exists utilisateurs;
 drop table if exists roles;
+drop table if exists locations;
+drop table if exists details_locations;
 
 CREATE TABLE clients (
     no_client SERIAL PRIMARY KEY,
@@ -68,6 +70,22 @@ CREATE TABLE utilisateurs_roles (
                                     FOREIGN KEY (no_utilisateur) REFERENCES UTILISATEURS(no_utilisateur)
                                         FOREIGN KEY (nom_role) REFERENCES ROLES(nom_role)
 );
+
+CREATE TABLE LOCATIONS (
+                           no_location SERIAL PRIMARY KEY,
+                           date_debut_location DATE NOT NULL,
+                           paye BOOLEAN NOT NULL,
+                           prix_total float
+);
+
+CREATE TABLE DETAILS_LOCATIONS (
+                                   no_ligne SERIAL NOT NULL,
+                                   no_location INT NOT NULL,
+                                   date_retour DATE,
+                                   tarif_location FLOAT NOT NULL,
+                                   PRIMARY KEY (no_ligne, no_location),
+                                   FOREIGN KEY (no_location) REFERENCES LOCATIONS(no_location)
+)
 
 -- Merci d'exécuter les scripts createProcedure.sql et insertTestSet.sql après ce script.
 
