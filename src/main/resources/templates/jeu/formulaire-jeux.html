@@ -1,6 +1,6 @@
 <th:block th:object="${jeu}">
 
-	<form action="/jeux/enregistrer" method="post" >
+	<form class="form-section" action="/jeux/enregistrer" method="post" >
 		<h1>Ajout d'un jeu</h1>
 		<div style="color: red;" th:if="${#fields.hasErrors('*')}" >
 			<p>Des erreurs de saisie sont apparues.</p>

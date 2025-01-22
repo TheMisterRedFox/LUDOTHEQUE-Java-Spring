@@ -1,6 +1,6 @@
 <th:block th:object="${client}">
 
-	<form action="/clients/enregistrer" method="post" >
+	<form class="form-section" action="/clients/enregistrer" method="post" >
 		<th:block th:if="${client.noClient != null }">
 			<h1>Modifier le client</h1>
 		</th:block>

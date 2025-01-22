@@ -20,7 +20,7 @@ public class WebSecurityConfig {
 				.authorizeHttpRequests((requests) -> requests
 						.requestMatchers("/jeux/ajouter", "/jeux/modifier/**", "/jeux/supprimer/**", "/jeux/{noJeu}/ajoutExemplaire").hasRole("ADMIN")
 						.requestMatchers(HttpMethod.POST, "/jeux/enregistrer", "/clients/enregistrer", "/exemplaires/enregistrer").hasRole("ADMIN")
-						.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+						.requestMatchers("/css/**", "/logo/**").permitAll()
 						.requestMatchers("/", "/jeux/**").permitAll()
 						.anyRequest().authenticated()
 				)

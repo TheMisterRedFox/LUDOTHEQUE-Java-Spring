@@ -11,7 +11,7 @@
     <link rel="icon" th:href="@{/logo/favicon.ico}" type="image/x-icon"/>
 </head>
     <body>
-        <form th:action="@{/login}" method="post">
+        <form class="form-section" th:action="@{/login}" method="post">
             <h1>Se connecter</h1>
             <div th:if="${param.error}">
                 Nom d'utilisateur et/ou mot de passe incorrect.

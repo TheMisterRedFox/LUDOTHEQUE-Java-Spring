@@ -35,7 +35,7 @@
 
 	<th:block th:object="${exemplaire}" sec:authorize="hasRole('ROLE_ADMIN')">
 
-		<form class="form-auto" th:action="${'/jeux/' + jeu.getNoJeu() + '/ajoutExemplaire'}" method="post" >
+		<form class="form-auto form-section" th:action="${'/jeux/' + jeu.getNoJeu() + '/ajoutExemplaire'}" method="post" >
 			<h1>Ajouter un exemplaire</h1>
 			<div style="color: red;" th:if="${#fields.hasErrors('*')}" >
 				<p>Des erreurs de saisie sont apparues.</p>
