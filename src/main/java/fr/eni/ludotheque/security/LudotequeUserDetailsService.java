@@ -11,18 +11,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 @Component
-public class DemoUserDetailsService implements UserDetailsService {
+public class LudotequeUserDetailsService implements UserDetailsService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	private SecurityService securityService;
 
-	public DemoUserDetailsService(SecurityService securityService) {
+	public LudotequeUserDetailsService(SecurityService securityService) {
 		this.securityService = securityService;
 	}
 
@@ -39,14 +37,6 @@ public class DemoUserDetailsService implements UserDetailsService {
 		} else {
 			throw new UsernameNotFoundException(username);
 		}
-/*
-		if (us.getNomUtilisateur().equals(username)) {
-			System.out.println(motDePasse);
-			System.out.println(us.getMotDePasse());
-			userBuilder.username(us.getNomUtilisateur()).password(us.getMotDePasse()).roles(us.getRoles().toArray(new String[0]));
-		} else {
-			throw new UsernameNotFoundException(username);
-		}*/
 
 		return userBuilder.build();
 	}
