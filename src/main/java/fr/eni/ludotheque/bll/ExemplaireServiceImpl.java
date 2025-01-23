@@ -40,4 +40,9 @@ public class ExemplaireServiceImpl implements ExemplaireService {
 	public List<Exemplaire> findByJeu(Jeu jeu) {
 		return exemplaireRepository.findByJeu(jeu);
 	}
+
+	@Override
+	public List<Exemplaire> findAllLouable() {
+		return exemplaireRepository.findAllLouable();
+	}
 }

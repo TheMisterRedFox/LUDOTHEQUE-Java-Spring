@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ExemplaireService extends ICrudService<Exemplaire> {
     List<Exemplaire> findByJeu(Jeu jeu);
+    List<Exemplaire> findAllLouable();
 }

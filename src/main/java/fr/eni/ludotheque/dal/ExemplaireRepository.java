@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ExemplaireRepository extends ICrudRepository<Exemplaire> {
     List<Exemplaire> findByJeu(Jeu jeu);
+    List<Exemplaire> findAllLouable();
 }

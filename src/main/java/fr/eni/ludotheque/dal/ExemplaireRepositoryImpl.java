@@ -31,6 +31,16 @@ public class ExemplaireRepositoryImpl implements ExemplaireRepository {
 	}
 
 	@Override
+	public List<Exemplaire> findAllLouable() {
+		String sql = "SELECT no_exemplaire_jeu, EJ.no_jeu, codebarre, louable, titre, reference, description, tarif_journee, agemin, duree FROM EXEMPLAIRES_JEUX EJ INNER JOIN JEUX J ON J.no_jeu = EJ.no_jeu WHERE louable = true";
+
+		List<Exemplaire> exemplaires = jdbcTemplate.query(sql, new ExemplaireRowMapper());
+
+		return exemplaires;
+	}
+
+
+	@Override
 	public Optional<Exemplaire> findById(int id) {
 		String sql = "SELECT no_exemplaire_jeu, EJ.no_jeu, codebarre, louable, titre, reference, description, tarif_journee, agemin, duree FROM EXEMPLAIRES_JEUX EJ INNER JOIN JEUX J ON J.no_jeu = EJ.no_jeu WHERE no_exemplaire_jeu = ?";
 

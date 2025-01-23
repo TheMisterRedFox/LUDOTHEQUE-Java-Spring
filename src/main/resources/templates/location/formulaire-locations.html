@@ -24,7 +24,7 @@
 		</div>
 		<div class="form-group">
 			<label for="idExemplairesLoues">Exemplaires loués</label>
-			<select th:field="*{idExemplairesLoues}" id="idExemplairesLoues" size="6" multiple="multiple">
+			<select th:field="*{idExemplairesLoues}" id="idExemplairesLoues" multiple="multiple">
 				<option th:each="exemplaire : ${exemplaires}"
 						th:value="${exemplaire.noExemplaire}"
 						th:text="${exemplaire.getNomExemplaire()}">

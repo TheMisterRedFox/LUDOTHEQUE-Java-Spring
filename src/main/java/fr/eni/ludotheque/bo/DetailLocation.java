@@ -8,15 +8,17 @@ public class DetailLocation {
 	private Date dateRetour;
 	private float tarifLocation;
 	private Location location;
+	private Exemplaire exemplaireLoue;
 
 	public DetailLocation() {
 	}
 
-	public DetailLocation(Integer noLigne, Location location, Date dateRetour, float tarifLocation) {
+	public DetailLocation(Integer noLigne, Location location, Date dateRetour, float tarifLocation, Exemplaire exemplaireLoue) {
 		this.noLigne = noLigne;
 		this.location = location;
 		this.dateRetour = dateRetour;
 		this.tarifLocation = tarifLocation;
+		this.exemplaireLoue = exemplaireLoue;
 	}
 
 	public Integer getNoLigne() {
@@ -49,5 +51,13 @@ public class DetailLocation {
 
 	public void setTarifLocation(float tarifLocation) {
 		this.tarifLocation = tarifLocation;
+	}
+
+	public Exemplaire getExemplaireLoue() {
+		return exemplaireLoue;
+	}
+
+	public void setExemplaireLoue(Exemplaire exemplaireLoue) {
+		this.exemplaireLoue = exemplaireLoue;
 	}
 }

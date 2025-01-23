@@ -55,8 +55,9 @@ public class LocationRepositoryImpl implements LocationRepository {
 	public void save(Location location) {
 		String sql;
 		if(location.getNoLocation() == null) {
-			sql = "INSERT INTO locations (no_location, date_debut_location, paye, prix_total, no_locataire) VALUES (?, ?, ?, ?, ?)";
-			jdbcTemplate.update(sql, location.getNoLocation(), location.getDateLocation(), location.getPaye(), location.getPrixTotal(), location.getLocataire().getNoClient());
+			// TODO FAIRE KEY
+			sql = "INSERT INTO locations (date_debut_location, paye, prix_total, no_locataire) VALUES (?, ?, ?, ?)";
+			jdbcTemplate.update(sql, location.getDateLocation(), location.getPaye(), location.getPrixTotal(), location.getLocataire().getNoClient());
 
 			// Insert des détails de locations après l'insert de la location
 			location.getLignesLocation().forEach(detailLocation -> {

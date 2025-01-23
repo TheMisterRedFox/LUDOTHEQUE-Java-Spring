@@ -90,7 +90,7 @@ public class Exemplaire {
 	}
 
 	public String getNomExemplaire() {
-		return getJeu().getTitre() + " (" + getCodeBarre() + ")";
+		return getJeu().getTitre() + " (" + getCodeBarre() + ") - " + getJeu().getTarifJourneeToString() + "€/j";
 	}
 
 	@Override
