@@ -20,18 +20,20 @@ public class Location {
 	
 	private List<DetailLocation> lignesLocation;
 
+	private Client locataire;
+
 	public Location() {
 		super();
 		this.lignesLocation = new ArrayList<DetailLocation>();
 	}
 
-	public Location(Integer noLocation, @NotNull Date dateLocation, @NotNull Boolean paye, float prixTotal) {
+	public Location(Integer noLocation, @NotNull Date dateLocation, @NotNull Boolean paye, float prixTotal, Client locataire) {
 		this();
-		
 		this.noLocation = noLocation;
 		this.dateLocation = dateLocation;
 		this.paye = paye;
 		this.prixTotal = prixTotal;
+		this.locataire = locataire;
 	}
 
 	public Integer getNoLocation() {
@@ -77,5 +79,12 @@ public class Location {
 	public void addLigneLocation(DetailLocation ligneLocation) {
 		this.lignesLocation.add(ligneLocation);
 	}
-	
+
+	public Client getLocataire() {
+		return locataire;
+	}
+
+	public void setLocataire(Client locataire) {
+		this.locataire = locataire;
+	}
 }

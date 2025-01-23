@@ -1,0 +1,60 @@
+<th:block th:object="${dtoLocation}">
+
+	<form class="form-section" action="/locations/enregistrer" method="post">
+		<h1>Ajout d'une location</h1>
+		<div style="color: red;" th:if="${#fields.hasErrors('*')}" >
+			<p>Des erreurs de saisie sont apparues.</p>
+		</div>
+
+		<input type="hidden" th:field="*{noLocation}" id="noJeu">
+		<div class="form-group">
+			<label for="idLocataire">Client locataire</label>
+			<select th:field="*{idLocataire}" id="idLocataire">
+				<option th:each="client : ${clients}"
+						th:value="${client.noClient}"
+						th:text="${client.getNomComplet()}">
+<!--						th:selected="${jeu.getGenres().contains(genre)}"-->
+				</option>
+			</select>
+			<span style="color: red;" th:if="${#fields.hasErrors('idLocataire')}">
+				<ul>
+					<li th:each="erreur : ${#fields.errors('idLocataire')}" th:text="${erreur}"></li>
+				</ul>
+			</span>
+		</div>
+		<div class="form-group">
+			<label for="idExemplairesLoues">Exemplaires loués</label>
+			<select th:field="*{idExemplairesLoues}" id="idExemplairesLoues" size="6" multiple="multiple">
+				<option th:each="exemplaire : ${exemplaires}"
+						th:value="${exemplaire.noExemplaire}"
+						th:text="${exemplaire.getNomExemplaire()}">
+				</option>
+			</select>
+			<span style="color: red;" th:if="${#fields.hasErrors('idExemplairesLoues')}">
+				<ul>
+					<li th:each="erreur : ${#fields.errors('idExemplairesLoues')}" th:text="${erreur}"></li>
+				</ul>
+			</span>
+		</div>
+		<div class="form-group">
+			<label for="dateLocation">Date de location</label> <input
+				th:attr="class=${#fields.hasErrors('dateLocation') ? 'input-error' : ''}"
+				type="date" th:field="*{dateLocation}" id="dateLocation">
+			<span style="color: red;" th:if="${#fields.hasErrors('dateLocation')}">
+				<ul>
+					<li th:each="erreur: ${#fields.errors('dateLocation')}" th:text="${erreur}"></li>
+				</ul>
+			</span>
+		</div>
+
+		<input type="hidden"
+			   th:name="${_csrf.parameterName}"
+			   th:value="${_csrf.token}"/>
+		<button type="submit" class="add-btn">Ajouter</button>
+	</form>
+
+</th:block>
+
+<script>
+	document.getElementById('dateLocation').valueAsDate = new Date();
+</script>

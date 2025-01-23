@@ -30,6 +30,7 @@
     <ul>
       <li><a th:href="@{/jeux}">Jeux</a></li>
       <li sec:authorize="hasAnyRole('ADMIN')"><a th:href="@{/clients}">Clients</a></li>
+      <li sec:authorize="hasAnyRole('ADMIN')"><a th:href="@{/locations}">Locations</a></li>
     </ul>
   </div>
 

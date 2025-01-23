@@ -89,6 +89,10 @@ public class Exemplaire {
 		this.jeuId = jeuId;
 	}
 
+	public String getNomExemplaire() {
+		return getJeu().getTitre() + " (" + getCodeBarre() + ")";
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(noExemplaire);

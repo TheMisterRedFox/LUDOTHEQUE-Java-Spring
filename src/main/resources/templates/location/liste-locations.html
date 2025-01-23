@@ -1,0 +1,32 @@
+<section class="section-group">
+	<h1>Liste des locations</h1>
+	<table>
+		<tr>
+			<th scope="col">Location n°</th>
+			<th scope="col">Loué par</th>
+			<th scope="col">Nombre de jeux</th>
+			<th scope="col">Payé ?</th>
+			<th scope="col">Prix total</th>
+		</tr>
+		<tr th:each="locations: ${loc}">
+			<td th:text="${loc.noLocation}" />
+			<td th:text="${loc.locataire.getNom() + ' ' + location.locataire.getPrenom()}" />
+			<td th:text="${loc.lignesLocation.size()}" />
+			<td>
+				<th:block th:if="${loc.paye == true}">
+					Oui
+				</th:block>
+				<th:block th:if="${loc.paye == false}">
+					Non
+				</th:block>
+			</td>
+			<td th:text="${loc.prixTotal}" />
+			<td>
+				<a th:href="@{/locations/{noLocation}(noLocation=${location.noLocation})}"><button class="primary-btn">Consulter</button></a>
+				<a sec:authorize="hasAnyRole('ADMIN')" th:href="@{/locations/supprimer/{noLocation}(noLocation=${location.noLocation})}"><button class="remove-btn">Supprimer</button></a>
+				<a sec:authorize="hasAnyRole('ADMIN')" th:href="@{/locations/modifier/{noLocation}(noLocation=${location.noLocation})}"><button>Modifier</button></a>
+			</td>
+		</tr>
+	</table>
+	<a href="/locations/ajouter"><button class="add-btn">Ajouter une location</button></a>
+</section>
